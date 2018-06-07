@@ -16,35 +16,70 @@ def parseFileWithCsvLibrary():
         except csv.Error as e:
             sys.exit('file {}, line {}: {}'.format(filename, reader.line_num, e))
 
+def formatData(fieldData, columnIndex):
+    '''Timestamp,Address,ZIP,FullName,FooDuration,BarDuration,TotalDuration,Notes'''
+    if columnIndex == 0:
+        #format timestamp: ISO-8601 format, convert Pacific -> Eastern
+        print('format timestamp')
+    elif columnIndex == 1:
+        #format address; unicode validation only
+        print('format address')
+    elif columnIndex == 2:
+        #format zip; 5 chars,  less than 5 digits, assume 0 as the prefix
+        print('format zip')
+    elif columnIndex == 3:
+        #format fullname: uppercase, nonenglish
+        print('format name')
+    elif columnIndex == 4 or columnIndex == 5 or columnIndex == 5: 
+        #format duration; HH:MM:SS.MS format (where MS is milliseconds); please convert them to a floating point seconds format
+        print('format duration')
 
-def handleUnicodeError(error, filename):
-    print(error.reason)
+    print(fieldData)
+    return(fieldData)
 
-    with open(filename, 'rb') as file:
-        header = file.readline()
-        next(file)
+def manuallyParseCsv(filename):
+    
+    with open(filename, 'rb') as csvFile: # read as binary to check for encoding
+        header = csvFile.readline()
+        
+        try:
+            headerString = header.decode()
+            columns = headerString.split(',')
+            '''Timestamp,Address,ZIP,FullName,FooDuration,BarDuration,TotalDuration,Notes'''
+        except UnicodeDecodeError:
+            return '''if we can't get a header, the rest of this approach falls apart.'''
 
-        for line in file:
+        next(csvFile)
+
+        for line in csvFile:
             # print(line)
-            try: # TODO replace the characters!
-                myString = line.decode(encoding='utf-8', errors='replace')
-                print(myString)
-            except UnicodeDecodeError as ue:
-                print('==== failure! ===== In Decoding at position {}'.format(ue.start))
+            fieldBytes = line.split(b',')
 
-        print(header)            
+            fieldCounter = 0
+            fieldList = []
+            for field in fieldBytes:    
+                print(field) # apply formatting logic
+                formattedField = formatData(field, fieldCounter)
+                fieldList.append(formattedField)
+                fieldCounter += 1
+        
+            # print(fieldList)
+            # business logic to apply:
+            #  - add foo + bar durations = total
+
+
 
 def parseCsvFile():
     filename = 'sample-with-broken-utf8.csv'
     # filename = 'sample.csv'
-    with open(filename, 'r') as file:
+    with open(filename, 'r') as csvFile:
         try: # TODO refactor out to use the csv library and make that method throw an exception
-            header = file.readline()
-            next(file)
-            for line in file:
+            header = csvFile.readline()
+            next(csvFile)
+            for line in csvFile:
                 print(line)
             print(header)
-        except UnicodeDecodeError as ue:
-            handleUnicodeError(ue, filename)
+        except UnicodeDecodeError:
+            manuallyParseCsv(filename)
 
 parseCsvFile()
