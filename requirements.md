@@ -1,24 +1,4 @@
 
-# Sample Engineering Interview
-
-## Introduction and expectations
-
-Hi there! Please complete the problem described below to the best of
-your ability, using the tools you're most comfortable with. Assume
-you're sending your submission in for code review from peers;
-we'll be talking about your submission in your interview in that
-context.
-
-We expect this to take less than 4 hours of actual coding time. Please
-submit a working but incomplete solution instead of spending more time
-on it. We're also aware that getting after-hours coding time can be
-challenging; we'd like a submission within a week and if you need more
-time please let us know.
-
-If you have any questions, please contact bizops@truss.works; we're
-happy to help if you're not sure what we're asking for or if you have
-questions.
-
 ## The problem: CSV normalization
 
 Please write a tool that reads a CSV formatted file on `stdin` and
