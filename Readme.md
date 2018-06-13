@@ -30,8 +30,9 @@ Here is a list of assumptions that are made in the implementation:
 * Testing on a wider variety of files and scenarios
 * Refactoring the code to make better use of Python collection features and proper code structure to support running from a wider variety of scenarios
 
-# Lessons (Re)Learned
+# Lessons Learned
 Here is a summary of a few things I learned on this journey.
 
 * Picking a language you're not intimately familiar with isn't the best option when there are time constraints. I should know this by now, but I really enjoyed digging into some meaty Python concepts.
 * Don't dive so deep on the trickier problems that you ignore the obvious ones. I spent so much time on the bad unicode CSV, I completely neglected the good unicode CSV scenario. 
+* Don't wait till the last minute to write the readme.
