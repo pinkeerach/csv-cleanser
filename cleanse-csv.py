@@ -21,21 +21,22 @@ def formatData(fieldData, columnIndex):
 
     decodedString = str(fieldData, 'utf-8', 'replace')
 
-    stringToReturn = ''
+    stringToReturn = decodedString
 
     if columnIndex == 0:
         import datetime
         #format timestamp: ISO-8601 format, convert Pacific -> Eastern
-        stringToReturn = decodedString #datetime.datetime.strftime('%Y-%m-%d %H:%M:%S',decodedString)    
-    elif columnIndex == 1:
-        #format address; unicode validation only
-        stringToReturn = decodedString
+        datetimeFromField = datetime.datetime.strptime(decodedString, '%m/%d/%y %I:%M:%S %p')
+        stringToReturn = datetimeFromField.strftime('%Y-%m-%d %H:%M:%S')
+    # elif columnIndex == 1 - format address; unicode validation only
     elif columnIndex == 2:
-        #format zip; 5 chars,  less than 5 digits, assume 0 as the prefix
-        stringToReturn = decodedString
+        #format zip; 5 chars, less than 5 digits, assume 0 as the prefix
+        while (len(stringToReturn) < 5):
+            stringToReturn = '0' + stringToReturn
+            
     elif columnIndex == 3:
         #format fullname: uppercase, nonenglish
-        stringToReturn = decodedString
+        stringToReturn = decodedString.upper()
     elif columnIndex == 4 or columnIndex == 5 or columnIndex == 5: 
         #format duration; HH:MM:SS.MS format (where MS is milliseconds); please convert them to a floating point seconds format
         stringToReturn = decodedString
