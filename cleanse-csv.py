@@ -77,6 +77,7 @@ def manuallyParseCsv(filename):
                 fieldCounter += 1
                 fieldList.append(formattedField)
         
+        # TODO build the new CSV file here
 
 def parseCsvFile():
     # filename = 'sample-with-broken-utf8.csv'
@@ -86,7 +87,7 @@ def parseCsvFile():
             header = csvFile.readline()
             next(csvFile)
             for line in csvFile:
-                print(line)
+                print(line) # TODO - add the formatting!
             print(header)
         except UnicodeDecodeError:
             manuallyParseCsv(filename)
