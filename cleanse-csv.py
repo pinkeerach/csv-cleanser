@@ -18,31 +18,37 @@ def parseFileWithCsvLibrary():
 
 def formatData(fieldData, columnIndex):
     '''Timestamp,Address,ZIP,FullName,FooDuration,BarDuration,TotalDuration,Notes'''
+
+    decodedString = str(fieldData, 'utf-8', 'replace')
+
+    stringToReturn = ''
+
     if columnIndex == 0:
+        import datetime
         #format timestamp: ISO-8601 format, convert Pacific -> Eastern
-        print('format timestamp')
+        stringToReturn = decodedString #datetime.datetime.strftime('%Y-%m-%d %H:%M:%S',decodedString)    
     elif columnIndex == 1:
         #format address; unicode validation only
-        print('format address')
+        stringToReturn = decodedString
     elif columnIndex == 2:
         #format zip; 5 chars,  less than 5 digits, assume 0 as the prefix
-        print('format zip')
+        stringToReturn = decodedString
     elif columnIndex == 3:
         #format fullname: uppercase, nonenglish
-        print('format name')
+        stringToReturn = decodedString
     elif columnIndex == 4 or columnIndex == 5 or columnIndex == 5: 
         #format duration; HH:MM:SS.MS format (where MS is milliseconds); please convert them to a floating point seconds format
-        print('format duration')
+        stringToReturn = decodedString
 
-    print(fieldData)
-    return(fieldData)
+    print(stringToReturn)
+    return(stringToReturn)
 
 def manuallyParseCsv(filename):
     
     with open(filename, 'rb') as csvFile: # read as binary to check for encoding
         header = csvFile.readline()
         
-        try:
+        try: #not sure i need this anymore
             headerString = header.decode()
             columns = headerString.split(',')
             '''Timestamp,Address,ZIP,FullName,FooDuration,BarDuration,TotalDuration,Notes'''
@@ -57,8 +63,8 @@ def manuallyParseCsv(filename):
 
             fieldCounter = 0
             fieldList = []
-            for field in fieldBytes:    
-                print(field) # apply formatting logic
+            for field in fieldBytes:    # apply formatting logic
+                # print(field) 
                 formattedField = formatData(field, fieldCounter)
                 fieldList.append(formattedField)
                 fieldCounter += 1
