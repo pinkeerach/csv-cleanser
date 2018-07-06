@@ -80,8 +80,8 @@ def manuallyParseCsv(filename):
         # TODO build the new CSV file here
 
 def parseCsvFile():
-    # filename = 'sample-with-broken-utf8.csv'
-    filename = 'sample.csv'
+    filename = 'sample-with-broken-utf8.csv'
+    # filename = 'sample.csv'
     with open(filename, 'r') as csvFile:
         try: # TODO refactor out to use the csv library and make that method throw an exception
             header = csvFile.readline()
